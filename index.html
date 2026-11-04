@@ -291,16 +291,21 @@
     .decoration.leaves-bottom { bottom:43px; left:12px; right:auto; width:86px; color:#5c624d; transform:rotate(-7deg); }
     .decoration.shears { bottom:38px; right:14px; width:72px; transform:rotate(-12deg); }
 @media (max-width:700px) {
-      .poster { padding:24px 25px; }
+      .poster { padding:20px 22px; }
       .poster::before { inset:10px; border-width:2px; }
       .poster::after { inset:15px; }
-      .brand-logo { width:95px; height:95px; }
-      .brand-name { font-size:31px; }
-      h1 { font-size:28px; }
-      .section-title { font-size:21px; }
-      .nav-pills { margin-bottom:13px; }
-      .slide .poster { width:calc(100vw - 52px); padding:24px 25px; }
-      .fixed-frame { width:calc(100vw - 52px); }
+      .brand-logo { width:88px; height:88px; }
+      .brand-name { font-size:29px; }
+      h1 { font-size:26px; }
+      .section-title { font-size:20px; }
+      .ornament { margin:10px auto 6px; }
+      .subtitle { margin-bottom:8px; }
+      .intro { margin-bottom:10px; }
+      .nav-pills { margin-bottom:10px; }
+      .menu-section { margin-top:11px; }
+      .menu-item { min-height:26px; padding:1px 0; }
+      .slide .poster { width:calc(100vw - 28px); padding:18px 20px; }
+      .fixed-frame { width:calc(100vw - 28px); }
       .fixed-frame::before { inset:10px; border-width:2px; }
       .fixed-frame::after { inset:15px; }
       .fixed-frame .frame-scissors { top:30px; left:10px; width:44px; }
@@ -315,9 +320,9 @@
       .contact-link { font-size:12px; }
       .catalog-card { padding:6px; }
       .catalog-card.wide { grid-column:span 2; }
-      .product-orb { height:86px; }
+      .product-orb { height:82px; }
       .product-orb::before { width:70px; }
-      .catalog-card.wide .product-orb { height:110px; }
+      .catalog-card.wide .product-orb { height:100px; }
       .catalog-card.wide .product-orb::before { width:96px; }
       .product-bottle { transform:scale(.82); }
       .menu-item { grid-template-columns:minmax(0, max-content) minmax(9px, 1fr) max-content; gap:6px; font-size:15px; }
@@ -334,9 +339,10 @@
 }
     @media (max-width:390px) {
       .poster { padding-right:21px; padding-left:21px; }
+      .slide .poster { padding:16px; }
       .topline { font-size:10px; }
       .topline i { width:17px; }
-      .menu-item { grid-template-columns:minmax(0, max-content) minmax(7px, 1fr) max-content; gap:5px; font-size:14px; }
+      .menu-item { grid-template-columns:minmax(0, max-content) minmax(7px, 1fr) max-content; gap:5px; min-height:25px; font-size:14px; }
       .service-name { white-space:normal; overflow-wrap:anywhere; }
       .service-meta { font-size:12px; }
       .catalog-card h3 { font-size:15px; }
@@ -601,7 +607,7 @@
       let fitScale = 1;
 
       function fitSlides() {
-        const availableWidth = Math.max(180, window.innerWidth - 86);
+        const availableWidth = Math.max(180, window.innerWidth - 28);
         const availableHeight = Math.max(240, window.innerHeight - 28);
         const panels = slides.map((slide) => slide.querySelector(".poster"));
         panels.forEach((panel) => { panel.style.height = "auto"; });
