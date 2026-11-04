@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="refresh" content="0;url=index.html#care">
+  <meta name="theme-color" content="#eee4d0">
+  <meta name="description" content="منتجات شعراوي للعناية بالشعر واللحية، اختيارات يومية من محل الحلاقة.">
+  <title>منتجات العناية | شعراوي</title>
+  <style>
+    @font-face { font-family:"Amiri"; src:url("./assets/fonts/Amiri-Regular.ttf") format("truetype"); font-weight:400; font-display:swap; }
+    @font-face { font-family:"Amiri"; src:url("./assets/fonts/Amiri-Bold.ttf") format("truetype"); font-weight:700; font-display:swap; }
+    :root { --paper:#eee4d0; --light:#f8f0e1; --shadow:#d8c6a6; --ink:#2b211a; --muted:#66584a; --rule:#9c8767; --accent:#754a36; --olive:#65634e; }
+    * { box-sizing:border-box; }
+    html { background:#bcae95; }
+    body { margin:0; padding:20px 12px; color:var(--ink); background-color:#bcae95; background-image:radial-gradient(#6b5c4519 .8px,transparent .8px),radial-gradient(#fff9e71c .8px,transparent .8px); background-size:7px 7px,9px 9px; font-family:"Amiri","Traditional Arabic",Georgia,serif; line-height:1.48; }
+    .poster { width:min(980px,100%); margin:0 auto; padding:38px clamp(28px,6vw,62px) 34px; position:relative; overflow:hidden; isolation:isolate; background-color:var(--paper); background-image:linear-gradient(112deg,#fff9e62e,transparent 35%,#7a603211),radial-gradient(#705a3711 .75px,transparent .75px); background-size:auto,6px 6px; border:1px solid #8d785a; box-shadow:0 12px 45px #2d211632; }
+    .poster::before,.poster::after { content:""; position:absolute; z-index:-1; inset:15px; pointer-events:none; }
+    .poster::before { border:3px double #715d43; }
+    .poster::after { inset:21px; border:1px solid #a18a67; }
+    .corner { position:absolute; z-index:2; color:var(--accent); font:31px/1 Georgia,serif; pointer-events:none; }
+    .corner::before { content:"❧"; display:block; }
+    .corner.tl { top:17px; left:18px; transform:rotate(8deg); } .corner.tr { top:17px; right:18px; transform:scaleX(-1) rotate(8deg); }
+    .corner.bl { bottom:17px; left:18px; transform:scaleY(-1) rotate(8deg); } .corner.br { bottom:17px; right:18px; transform:scale(-1) rotate(8deg); }
+    .topline { display:flex; justify-content:space-between; align-items:center; gap:10px; max-width:780px; margin:0 auto 12px; color:var(--muted); font-size:13px; font-weight:700; }
+    .topline span { display:flex; align-items:center; gap:8px; } .topline i { display:block; width:32px; height:1px; background:var(--rule); }
+    .brand { text-align:center; display:flex; flex-direction:column; align-items:center; }
+    .brand-logo { width:88px; height:88px; object-fit:cover; border-radius:50%; filter:grayscale(1) contrast(1.12); box-shadow:0 0 0 2px var(--paper),0 0 0 3px #725c42; }
+    .brand-name { margin:7px 0 0; font-size:32px; line-height:1; }
+    .brand-tag { margin:4px 0 0; color:var(--muted); font-size:14px; }
+    .ornament { display:flex; justify-content:center; align-items:center; gap:10px; width:min(470px,90%); margin:12px auto 8px; color:var(--accent); }
+    .ornament::before,.ornament::after { content:""; height:1px; flex:1; background:var(--rule); }
+    .ornament span { font-size:17px; line-height:1; }
+    h1 { margin:0; text-align:center; font-size:32px; line-height:1.2; }
+    .subtitle { margin:3px auto 14px; text-align:center; color:var(--muted); font-size:15px; }
+    .nav-pills { display:flex; justify-content:center; gap:9px; flex-wrap:wrap; margin:0 auto 18px; }
+    .nav-pills a { display:inline-block; padding:4px 15px; border:1px solid #aa9676; border-radius:999px; color:var(--ink); text-decoration:none; background:#f7efdfbd; font-size:14px; }
+    .nav-pills a[aria-current="page"] { color:var(--light); background:var(--ink); border-color:var(--ink); }
+    .category-row { display:flex; align-items:center; justify-content:space-between; gap:14px; margin:0 0 12px; }
+    .category-row h2 { margin:0; font-size:22px; }
+    .category-row p { margin:0; color:var(--muted); font-size:13px; }
+    .filters { display:flex; flex-wrap:wrap; gap:7px; margin:0 0 19px; }
+    .filter { appearance:none; border:1px solid #aa9676; border-radius:999px; padding:4px 14px; background:#f7efdfc9; color:var(--ink); font:700 14px "Amiri",serif; cursor:pointer; transition:background .2s,color .2s,transform .2s; }
+    .filter:hover { transform:translateY(-1px); }
+    .filter.active { background:var(--olive); color:#fff8e9; border-color:var(--olive); }
+    .product-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+    .product-card { position:relative; overflow:hidden; padding:10px 10px 14px; border:1px solid #c2ad89; border-radius:42% 42% 22px 22px / 18% 18% 22px 22px; background:linear-gradient(145deg,#f9f2e4,#e5d6ba); box-shadow:0 8px 16px #45332120,inset 0 1px #fff9e6; transition:transform .22s,box-shadow .22s; }
+    .product-card:hover { transform:translateY(-4px); box-shadow:0 13px 22px #4533212b,inset 0 1px #fff9e6; }
+    .product-card.featured { grid-column:span 2; display:grid; grid-template-columns:1.05fr .95fr; align-items:center; border-radius:30px 54px 30px 54px; padding:15px 20px; }
+    .product-card[hidden] { display:none; }
+    .product-visual { position:relative; min-height:196px; display:grid; place-items:center; isolation:isolate; }
+    .product-card.featured .product-visual { min-height:246px; grid-column:2; grid-row:1; }
+    .product-visual::before { content:""; position:absolute; z-index:-1; width:78%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 28%,#fff8e6 0 12%,#e4d7bb 48%,#cbb895 100%); box-shadow:inset 0 0 0 1px #a28b665c,0 10px 18px #392b1d18; }
+    .product-visual::after { content:""; position:absolute; z-index:-2; width:62%; aspect-ratio:1; border-radius:50%; border:1px solid #927b5966; transform:translate(-13px,10px); }
+    .product-art { width:min(74%,170px); height:174px; filter:drop-shadow(9px 14px 8px #2c211c35); overflow:visible; }
+    .product-card.featured .product-art { width:min(68%,205px); height:214px; }
+    .product-art .body { fill:#211d19; stroke:#241e19; stroke-width:2; }
+    #products .product-card:nth-child(1) .body { fill:url(#bottle1); }
+    #products .product-card:nth-child(2) .body { fill:url(#bottle2); }
+    #products .product-card:nth-child(3) .body { fill:url(#bottle3); }
+    #products .product-card:nth-child(4) .body { fill:url(#bottle4); }
+    #products .product-card:nth-child(5) .body { fill:url(#bottle5); }
+    #products .product-card:nth-child(6) .body { fill:url(#bottle6); }
+    .product-art .cap { fill:#211d19; stroke:#111; stroke-width:2; }
+    .product-art .label { fill:#eee4d0; stroke:#876e4b; stroke-width:1.5; }
+    .product-art .accent { fill:#81533b; }
+    .product-art .line { fill:none; stroke:#40352c; stroke-width:1.2; }
+    .product-art text { font-family:"Amiri",serif; fill:#33271d; text-anchor:middle; }
+    .badge { position:absolute; top:12px; right:12px; padding:2px 10px; border-radius:999px; color:#fff8e9; background:var(--olive); font-size:12px; box-shadow:0 3px 7px #392b1d25; }
+    .product-copy { padding:0 8px; }
+    .product-card.featured .product-copy { grid-column:1; grid-row:1; padding:10px 18px 10px 4px; }
+    .product-type { margin:0; color:var(--accent); font-size:12px; font-weight:700; letter-spacing:.03em; }
+    .product-name { margin:1px 0 2px; font-size:20px; line-height:1.2; }
+    .product-card.featured .product-name { font-size:25px; }
+    .product-desc { min-height:38px; margin:0; color:#5e5142; font-size:13px; line-height:1.45; }
+    .product-card.featured .product-desc { max-width:310px; font-size:15px; }
+    .card-bottom { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:8px; padding-top:7px; border-top:1px solid #ad9877; }
+    .price { color:#723e2e; font-size:22px; line-height:1.1; font-weight:700; white-space:nowrap; }
+    .price small { color:var(--muted); font-size:11px; font-weight:400; }
+    .product-card.featured .price { font-size:27px; }
+    .note { display:flex; align-items:center; gap:7px; margin:22px auto 0; padding:9px 14px; width:fit-content; max-width:100%; border:1px dashed #9b8666; border-radius:14px; color:#5e5142; text-align:center; font-size:13px; }
+    .footer { max-width:780px; margin:18px auto 0; padding:11px 0 0; border-top:1px solid var(--rule); text-align:center; color:var(--muted); }
+    .footer strong { display:block; color:var(--ink); font-size:17px; }
+    .footer p { margin:2px 0 0; font-size:12px; }
+    .footer a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:3px; }
+    @media(max-width:760px) {
+      body { padding:8px 6px; }
+      .poster { padding:28px 23px; }
+      .poster::before { inset:10px; border-width:2px; } .poster::after { inset:15px; }
+      .brand-logo { width:76px; height:76px; } .brand-name { font-size:29px; } h1 { font-size:27px; }
+      .product-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:11px; }
+      .product-card { border-radius:40% 40% 18px 18px / 14% 14% 18px 18px; padding:8px 8px 12px; }
+      .product-card.featured { grid-column:span 2; }
+      .product-visual { min-height:164px; } .product-art { height:150px; }
+      .product-card.featured .product-visual { min-height:205px; } .product-card.featured .product-art { height:190px; }
+    }
+    @media(max-width:460px) {
+      .poster { padding:25px 19px; }
+      .topline { font-size:11px; } .topline i { width:18px; }
+      .category-row { align-items:flex-start; flex-direction:column; gap:0; }
+      .category-row h2 { font-size:20px; }
+      .product-grid { gap:9px; }
+      .product-card.featured { grid-template-columns:1fr; padding:9px 9px 13px; border-radius:32px; }
+      .product-card.featured .product-visual { grid-column:1; grid-row:auto; min-height:184px; }
+      .product-card.featured .product-art { width:44%; height:166px; }
+      .product-card.featured .product-copy { grid-column:1; grid-row:auto; padding:0 10px; }
+      .product-card.featured .product-name { font-size:21px; } .product-card.featured .product-desc { font-size:13px; }
+      .product-visual { min-height:130px; }
+      .product-art { width:74%; height:123px; }
+      .product-name { font-size:16px; }
+      .product-desc { min-height:52px; font-size:11px; }
+      .price { font-size:18px; } .price small { font-size:10px; }
+      .card-bottom { margin-top:6px; padding-top:5px; }
+      .badge { top:8px; right:8px; font-size:10px; }
+    }
+    @media print { @page { size:A4 portrait; margin:8mm; } html,body { background:#fff; padding:0; } .poster { width:100%; border:0; box-shadow:none; padding:20px 28px; } .filters,.nav-pills { display:none; } .product-card { break-inside:avoid; box-shadow:none; } }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; } }
+  </style>
+</head>
+<body>
+  <main class="poster">
+    <span class="corner tl" aria-hidden="true"></span><span class="corner tr" aria-hidden="true"></span>
+    <span class="corner bl" aria-hidden="true"></span><span class="corner br" aria-hidden="true"></span>
+    <div class="topline"><span><i></i> حلاقة وتصفيف على أصولها</span><span>منيو شعراوي<i></i></span></div>
+    <header class="brand">
+      <img class="brand-logo" src="./assets/sh3rawy-logo.jpg" alt="شعار شعراوي للحلاقة وتصفيف الشعر">
+      <div class="brand-name">شعراوي</div>
+      <p class="brand-tag">للحلاقة وتصفيف الشعر</p>
+    </header>
+    <div class="ornament" aria-hidden="true"><span>✦ ◆ ✦</span></div>
+    <h1>منتجات العناية</h1>
+    <p class="subtitle">اختيارات مقترحة للشعر واللحية تكمل عنايتك اليومية</p>
+    <nav class="nav-pills" aria-label="التنقل بين صفحات شعراوي">
+      <a href="index.html" target="_self">منيو الحلاقة</a>
+      <a href="products.html" target="_self" aria-current="page">منتجات العناية</a>
+    </nav>
+    <section aria-labelledby="catalog-title">
+      <div class="category-row">
+        <h2 id="catalog-title">من رفّ الحلاق</h2>
+        <p>منتجات مختارة بعناية من شعراوي</p>
+      </div>
+      <div class="filters" role="group" aria-label="تصفية حسب نوع المنتج">
+        <button class="filter active" type="button" data-filter="all" aria-pressed="true">الكل</button>
+        <button class="filter" type="button" data-filter="hair" aria-pressed="false">الشعر</button>
+        <button class="filter" type="button" data-filter="beard" aria-pressed="false">اللحية</button>
+        <button class="filter" type="button" data-filter="tools" aria-pressed="false">أدوات</button>
+      </div>
+      <div class="product-grid" id="products">
+        <article class="product-card featured" data-category="hair">
+          <span class="badge">اختيار الحلاق</span>
+          <div class="product-visual" aria-hidden="true">
+            <svg class="product-art" viewBox="0 0 180 230">
+              <defs><linearGradient id="bottle1" x1="0" x2="1"><stop stop-color="#161513"/><stop offset=".24" stop-color="#393631"/><stop offset=".52" stop-color="#131210"/><stop offset=".82" stop-color="#302c26"/><stop offset="1" stop-color="#100f0e"/></linearGradient></defs>
+              <path class="body" d="M60 48h60l8 16v139q0 10-10 10H62q-10 0-10-10V64l8-16Z"/>
+              <path class="cap" d="M72 17h36v33H72zM77 8h26v10H77z"/><path d="M77 21h26" stroke="#655f55" stroke-width="2"/>
+              <path class="label" d="M64 80h52v79H64z"/><circle class="accent" cx="90" cy="95" r="9"/>
+              <text x="90" y="119" font-size="12" font-weight="700">شعراوي</text><text x="90" y="133" font-size="8">شامبو الشعر</text><path class="line" d="M75 142h30M80 149h20"/>
+              <path d="M58 174h64" stroke="#6b665d" opacity=".5"/>
+            </svg>
+          </div>
+          <div class="product-copy">
+            <p class="product-type">للشعر · ٢٥٠ مل</p>
+            <h3 class="product-name">شامبو تنظيف يومي</h3>
+            <p class="product-desc">تنظيف منعش للشعر وفروة الرأس، بتركيبة خفيفة تناسب الاستخدام اليومي.</p>
+            <div class="card-bottom"><span class="price">٢٩٠ <small>ج.م</small></span><span>✦ عناية يومية</span></div>
+          </div>
+        </article>
+        <article class="product-card" data-category="beard">
+          <div class="product-visual" aria-hidden="true">
+            <svg class="product-art" viewBox="0 0 180 210"><defs><linearGradient id="bottle2" x1="0" x2="1"><stop stop-color="#161513"/><stop offset=".24" stop-color="#393631"/><stop offset=".52" stop-color="#131210"/><stop offset=".82" stop-color="#302c26"/><stop offset="1" stop-color="#100f0e"/></linearGradient></defs>
+              <path class="body" d="M68 54h44l8 12v116q0 9-9 9H69q-9 0-9-9V66l8-12Z"/><path class="cap" d="M78 20h24v36H78zM82 10h16v12H82z"/><path class="label" d="M66 88h48v59H66z"/><text x="90" y="108" font-size="10" font-weight="700">شعراوي</text><text x="90" y="123" font-size="8">زيت اللحية</text><path class="line" d="M77 133h26"/></svg>
+          </div>
+          <div class="product-copy"><p class="product-type">للحية · ٣٠ مل</p><h3 class="product-name">زيت اللحية</h3><p class="product-desc">لمسة ترطيب ولمعان خفيف للحية والشارب.</p><div class="card-bottom"><span class="price">٢٢٠ <small>ج.م</small></span><span>✦ ترطيب</span></div></div>
+        </article>
+        <article class="product-card" data-category="hair">
+          <div class="product-visual" aria-hidden="true">
+            <svg class="product-art" viewBox="0 0 180 210"><defs><linearGradient id="bottle3" x1="0" x2="1"><stop stop-color="#171512"/><stop offset=".35" stop-color="#474137"/><stop offset=".7" stop-color="#211e19"/><stop offset="1" stop-color="#11100e"/></linearGradient></defs>
+              <path class="body" d="M57 62h66l7 12v108q0 9-9 9H59q-9 0-9-9V74l7-12Z"/><path class="cap" d="M62 40h56v25H62z"/><path class="label" d="M59 91h62v66H59z"/><text x="90" y="112" font-size="10" font-weight="700">شعراوي</text><text x="90" y="128" font-size="8">واكس مطفي</text><path class="line" d="M72 139h36"/></svg>
+          </div>
+          <div class="product-copy"><p class="product-type">للشعر · ١٠٠ جم</p><h3 class="product-name">واكس تثبيت مطفي</h3><p class="product-desc">تصفيف مرن وثبات طبيعي من غير لمعة زيادة.</p><div class="card-bottom"><span class="price">٢٤٠ <small>ج.م</small></span><span>✦ تصفيف</span></div></div>
+        </article>
+        <article class="product-card" data-category="beard">
+          <div class="product-visual" aria-hidden="true">
+            <svg class="product-art" viewBox="0 0 180 210"><defs><linearGradient id="bottle4" x1="0" x2="1"><stop stop-color="#b98a42"/><stop offset=".3" stop-color="#e0bd75"/><stop offset=".65" stop-color="#9d6a2e"/><stop offset="1" stop-color="#654425"/></linearGradient></defs>
+              <path class="body" d="M65 58h50l8 14v110q0 9-9 9H66q-9 0-9-9V72l8-14Z"/><path class="cap" d="M73 26h34v35H73zM80 12h20v17H80z"/><path class="label" d="M65 91h50v61H65z"/><text x="90" y="111" font-size="10" font-weight="700">شعراوي</text><text x="90" y="127" font-size="8">بلسم اللحية</text><path class="line" d="M76 138h28"/></svg>
+          </div>
+          <div class="product-copy"><p class="product-type">للحية · ٧٥ جم</p><h3 class="product-name">بلسم اللحية</h3><p class="product-desc">ينعّم الشعر ويساعد على ترتيب اللحية طول اليوم.</p><div class="card-bottom"><span class="price">٢٦٠ <small>ج.م</small></span><span>✦ تنعيم</span></div></div>
+        </article>
+        <article class="product-card" data-category="tools">
+          <div class="product-visual" aria-hidden="true">
+            <svg class="product-art" viewBox="0 0 180 210"><defs><linearGradient id="bottle5" x1="0" x2="1"><stop stop-color="#5e3c27"/><stop offset=".35" stop-color="#a57242"/><stop offset=".65" stop-color="#68452e"/><stop offset="1" stop-color="#3b291e"/></linearGradient></defs>
+              <path class="body" d="M60 51q0-9 9-9h42q9 0 9 9v139q0 8-8 8H68q-8 0-8-8V51Z"/><path d="M66 52h48v131H66z" fill="none" stroke="#d0a16a" stroke-width="2"/><path d="M73 60v116M82 60v116M91 60v116M100 60v116M109 60v116" stroke="#d0a16a" stroke-width="1.5"/><path class="label" d="M67 104h46v35H67z"/><text x="90" y="119" font-size="9" font-weight="700">شعراوي</text><text x="90" y="132" font-size="7">مشط خشب</text></svg>
+          </div>
+          <div class="product-copy"><p class="product-type">أدوات · خشب طبيعي</p><h3 class="product-name">مشط الجيب</h3><p class="product-desc">أسنان متباعدة لتصفيف الشعر واللحية بسهولة.</p><div class="card-bottom"><span class="price">١٨٠ <small>ج.م</small></span><span>✦ عملي</span></div></div>
+        </article>
+        <article class="product-card" data-category="tools">
+          <div class="product-visual" aria-hidden="true">
+            <svg class="product-art" viewBox="0 0 180 210"><defs><linearGradient id="bottle6" x1="0" x2="1"><stop stop-color="#68472e"/><stop offset=".4" stop-color="#b78650"/><stop offset=".75" stop-color="#765032"/><stop offset="1" stop-color="#412b1e"/></linearGradient></defs>
+              <path class="body" d="M53 54q0-12 12-12h50q12 0 12 12v82q0 12-12 12H65q-12 0-12-12V54Z"/><path class="body" d="M73 140h34v44q0 11-11 11h-12q-11 0-11-11v-44Z"/><path d="M61 53h58v78H61z" fill="none" stroke="#d0a16a" stroke-width="2"/><path d="M68 61v63M77 61v63M86 61v63M95 61v63M104 61v63M113 61v63" stroke="#e2c28d" stroke-width="1.5"/><text x="90" y="151" font-size="9" font-weight="700">شعراوي</text></svg>
+          </div>
+          <div class="product-copy"><p class="product-type">أدوات · عناية باللحية</p><h3 class="product-name">فرشاة اللحية</h3><p class="product-desc">شعيرات متينة لتسريح اللحية وتوزيع الزيت.</p><div class="card-bottom"><span class="price">٣١٠ <small>ج.م</small></span><span>✦ ترتيب</span></div></div>
+        </article>
+      </div>
+    </section>
+    <div class="note"><span aria-hidden="true">✦</span><span>المنتجات والأسعار أمثلة قابلة للتعديل · اسأل الحلاق عن الأنسب ليك.</span></div>
+    <footer class="footer"><strong>أهلاً بيك في شعراوي</strong><p>الأسعار بالجنيه المصري · <a href="index.html" target="_self">ارجع لمنيو الحلاقة</a></p></footer>
+  </main>
+  <script>
+    const filters = document.querySelectorAll(".filter");
+    const cards = document.querySelectorAll(".product-card");
+    filters.forEach((button) => button.addEventListener("click", () => {
+      const selected = button.dataset.filter;
+      filters.forEach((filter) => {
+        const active = filter === button;
+        filter.classList.toggle("active", active);
+        filter.setAttribute("aria-pressed", String(active));
+      });
+      cards.forEach((card) => { card.hidden = selected !== "all" && card.dataset.category !== selected; });
+    }));
+  </script>
+</body>
+</html>

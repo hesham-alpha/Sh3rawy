@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eee4d0">
+  <meta name="description" content="منيو شعراوي للحلاقة الرجالي، قص الشعر والعناية باللحية بأسعار بالجنيه المصري.">
+  <title>شعراوي | منيو الحلاقة</title>
+  <style>
+    @font-face {
+      font-family: "Amiri";
+      src: url("./assets/fonts/Amiri-Regular.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Amiri";
+      src: url("./assets/fonts/Amiri-Bold.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+    }
+    :root {
+      --paper: #eee4d0;
+      --paper-light: #f5eddf;
+      --paper-shadow: #d9c8a8;
+      --ink: #2b211a;
+      --muted: #66584a;
+      --rule: #9c8767;
+      --accent: #754a36;
+      --olive: #65634e;
+    }
+    * { box-sizing: border-box; }
+    /* 2D paper-cut intro: the tools trace the cut, the two paper halves part. */
+    .intro-overlay {
+      position:fixed;
+      inset:0;
+      z-index:20;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      background:transparent;
+      color:#34271d;
+
+      pointer-events:none;
+    }
+    .intro-overlay::before,.intro-overlay::after { content:""; position:absolute; z-index:2; inset:16px; pointer-events:none; }
+    .intro-overlay::before { border:3px double #775a3e; }
+    .intro-overlay::after { inset:22px; border:1px solid #aa906a; }
+    .intro-paper { position:absolute; z-index:1; left:0; right:0; height:50.2vh; background-color:#eee4d0; background-image:radial-gradient(#705a3711 .75px, transparent .75px), linear-gradient(112deg,#fff9e62e,transparent 38%,#7a603211); background-size:6px 6px,auto; }
+    .intro-paper-top { top:0; clip-path:polygon(0 0,100% 0,100% 100%,96% 98%,92% 100%,87% 98%,82% 100%,77% 98%,72% 100%,67% 98%,62% 100%,57% 98%,52% 100%,47% 98%,42% 100%,37% 98%,32% 100%,27% 98%,22% 100%,17% 98%,12% 100%,7% 98%,0 100%); box-shadow:inset 0 -14px 18px -20px #3a2a1c; animation:paper-top-lift .65s cubic-bezier(.3,.05,.2,1) 2.35s forwards; }
+    .intro-paper-bottom { bottom:0; clip-path:polygon(0 0,7% 2%,12% 0,17% 2%,22% 0,27% 2%,32% 0,37% 2%,42% 0,47% 2%,52% 0,57% 2%,62% 0,67% 2%,72% 0,77% 2%,82% 0,87% 2%,92% 0,96% 2%,100% 0,100% 100%,0 100%); box-shadow:inset 0 14px 18px -20px #3a2a1c; animation:paper-bottom-lift .65s cubic-bezier(.3,.05,.2,1) 2.35s forwards; }
+    .intro-stage { position:absolute; z-index:3; inset:0; width:100%; height:100%; }
+    .intro-brand { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+    .intro-mark { font:700 clamp(38px, 8vw, 64px)/1 "Amiri", serif; color:var(--ink); white-space:nowrap; transform-origin:center; will-change:transform; }
+
+    html.intro-play .intro-caption { animation:caption-remove .01s steps(1,end) 2.35s forwards; }
+    .intro-caption { margin-top:8px; color:#76543a; font:700 16px "Amiri", serif; letter-spacing:.06em; }
+    .intro-tools { position:absolute; top:50%; z-index:3; width:clamp(128px, 27vw, 184px); height:auto; overflow:visible; }
+    .intro-tool-art { display:block; width:100%; height:auto; overflow:visible; filter:drop-shadow(0 3px 2px #39291d2b); }
+    .lift-up { animation:tool-lift-up .65s cubic-bezier(.3,.05,.2,1) 2.35s forwards; }
+    .lift-down { animation:tool-lift-down .65s cubic-bezier(.3,.05,.2,1) 2.35s forwards; }
+    .intro-scissors { left:calc(50% - 190px); transform:translate(-110vw, -50%) rotate(-18deg); animation:scissors-cut 2.35s cubic-bezier(.4,0,.2,1) forwards; }
+    .intro-razor { right:calc(50% - 190px); transform:translate(110vw, -50%) rotate(18deg); animation:razor-sweep 2.35s cubic-bezier(.4,0,.2,1) forwards; }
+    .intro-tools path,.intro-tools circle,.intro-tools line { stroke:#34271d; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+    .intro-tools .metal { fill:#f4ead6; }
+    .intro-tools .handle { fill:#78583c; }
+    .intro-tools .pivot { fill:#a47b4b; stroke:#34271d; stroke-width:2; }
+    .scissor-upper { transform-box:view-box; transform-origin:78px 61px; animation:snip-upper .48s ease-in-out .28s 4 alternate; }
+    .scissor-lower { transform-box:view-box; transform-origin:78px 61px; animation:snip-lower .48s ease-in-out .28s 4 alternate; }
+    html.intro-skip .intro-overlay { display:none; }
+    html:not(.intro-skip) .slide:first-child .poster { clip-path:inset(50% 0 50% 0); animation:menu-from-center .95s cubic-bezier(.3,.05,.2,1) 2.35s forwards; }
+    html.intro-play .slide:first-child .brand-name { visibility:hidden; }
+    @keyframes scissors-cut {
+      0% { transform:translate(-110vw, -50%) rotate(-18deg); }
+      34% { transform:translate(-68vw, -50%) rotate(4deg); }
+      58% { transform:translate(-30vw, -50%) rotate(-4deg); }
+      82% { transform:translate(-7vw, -50%) rotate(3deg); }
+      100% { transform:translate(0, -50%) rotate(-2deg); }
+    }
+    @keyframes razor-sweep {
+      0% { transform:translate(110vw, -50%) rotate(18deg); }
+      34% { transform:translate(68vw, -50%) rotate(-4deg); }
+      58% { transform:translate(30vw, -50%) rotate(4deg); }
+      82% { transform:translate(7vw, -50%) rotate(-3deg); }
+      100% { transform:translate(0, -50%) rotate(2deg); }
+    }
+    @keyframes snip-upper { from { transform:rotate(-9deg); } to { transform:rotate(9deg); } }
+    @keyframes snip-lower { from { transform:rotate(9deg); } to { transform:rotate(-9deg); } }
+    @keyframes paper-top-lift { to { transform:translateY(-102%); } }
+    @keyframes paper-bottom-lift { to { transform:translateY(102%); } }
+    @keyframes caption-remove { to { visibility:hidden; } }
+    @keyframes tool-lift-up { to { transform:translateY(-110vh) rotate(-12deg); } }
+    @keyframes tool-lift-down { to { transform:translateY(110vh) rotate(12deg); } }
+    @keyframes menu-from-center { to { clip-path:inset(0 0 0 0); } }
+            @media (max-width:700px) {
+      .intro-stage { inset:0; }
+      .intro-scissors { left:calc(50% - 142px); }
+      .intro-razor { right:calc(50% - 142px); }
+      .intro-tools { width:clamp(112px, 34vw, 150px); }
+      .intro-caption { font-size:14px; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      .intro-overlay { display:none!important; animation:none!important; }
+      html:not(.intro-skip) .slide:first-child .poster { opacity:1!important; clip-path:none!important; animation:none!important; }
+      html:not(.intro-skip) .slide:first-child .brand-name { visibility:visible!important; animation:none!important; }
+    }
+    html { background: #bcae95; }
+    body {
+      margin: 0;
+      padding: 20px 12px;
+      color: var(--ink);
+      background-color: #bcae95;
+      background-image: radial-gradient(#6b5c4519 .8px, transparent .8px), radial-gradient(#fff9e71c .8px, transparent .8px);
+      background-size: 7px 7px, 9px 9px;
+      font-family: "Amiri", "Traditional Arabic", Georgia, serif;
+      line-height: 1.48;
+    }
+    .poster {
+      width: min(760px, 100%);
+      min-height: 1020px;
+      margin: 0 auto;
+      padding: 38px clamp(34px, 8vw, 70px) 32px;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      background-color: var(--paper);
+      background-image: linear-gradient(112deg, #fff9e62e, transparent 35%, #7a603211), radial-gradient(#705a3711 .75px, transparent .75px);
+      background-size: auto, 6px 6px;
+      border: 1px solid #8d785a;
+      box-shadow: 0 12px 45px #2d211632;
+    }
+    .poster::before, .poster::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .poster::before { inset: 15px; border: 3px double #715d43; }
+    .poster::after { inset: 21px; border: 1px solid #a18a67; }
+    .corner {
+      position: absolute;
+      z-index: 2;
+      color: var(--accent);
+      font-family: Georgia, serif;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .corner::before { content: "❧"; display: block; font-size: 31px; }
+    .corner.tl { top: 17px; left: 18px; transform: rotate(8deg); }
+    .corner.tr { top: 17px; right: 18px; transform: scaleX(-1) rotate(8deg); }
+    .corner.bl { bottom: 17px; left: 18px; transform: scaleY(-1) rotate(8deg); }
+    .corner.br { bottom: 17px; right: 18px; transform: scale(-1) rotate(8deg); }
+    .topline, .brand, .ornament, .intro, .menu-section, .footer { position: relative; z-index: 1; }
+    .topline {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap: 12px;
+      max-width: 590px;
+      margin: 0 auto 12px;
+      color: var(--muted);
+      font: 700 12px/1.4 "Amiri", serif;
+      letter-spacing: .04em;
+    }
+    .topline span { display:flex; align-items:center; gap:8px; }
+    .topline i { display:block; width:34px; height:1px; background:var(--rule); }
+    .brand { text-align:center; display:flex; flex-direction:column; align-items:center; }
+    .brand-logo { width:112px; height:112px; display:block; object-fit:cover; border-radius:50%; filter:grayscale(1) contrast(1.12); box-shadow:0 0 0 2px var(--paper), 0 0 0 3px #725c42; }
+    .brand-name { margin:9px 0 0; font-size:36px; line-height:1.05; font-weight:700; color:var(--ink); }
+    .brand-tag { margin:2px 0 0; color:var(--muted); font-size:15px; letter-spacing:.03em; }
+    .ornament { display:flex; justify-content:center; align-items:center; gap:10px; width:min(470px, 90%); margin:14px auto 10px; color:var(--accent); }
+    .ornament::before,.ornament::after { content:""; height:1px; flex:1; background:var(--rule); }
+    .ornament span { font-size:17px; line-height:1; }
+    h1 { margin:0; text-align:center; font-size:32px; font-weight:700; line-height:1.15; }
+    .subtitle { margin:3px 0 11px; text-align:center; font-size:15px; color:var(--muted); }
+    .intro { margin:0 auto 15px; max-width:570px; text-align:center; font-size:14px; color:#55483a; }
+    .nav-pills { display:flex; justify-content:center; gap:9px; flex-wrap:wrap; margin:0 auto 15px; }
+    .nav-pills button { display:inline-block; padding:4px 15px; border:1px solid #aa9676; border-radius:999px; color:var(--ink); background:#f7efdfbd; font:700 14px "Amiri",serif; cursor:pointer; transition:background .2s,color .2s,transform .2s; }
+    .nav-pills button:hover { transform:translateY(-1px); }
+    .nav-pills button[aria-current="page"] { color:var(--paper-light); background:var(--ink); border-color:var(--ink); }
+    .menu-section { max-width:620px; margin:14px auto 0; }
+    .section-title {
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:10px;
+      margin:0 0 5px;
+      padding:0 0 5px;
+      border-bottom:1px solid #ab9675;
+      color:var(--ink);
+      font-size:23px;
+      line-height:1.15;
+      font-weight:700;
+      text-align:center;
+    }
+    .section-title .flourish { color:var(--accent); font-size:21px; line-height:1; }
+    .menu-list { margin:0; padding:0; list-style:none; }
+    .menu-item {
+      display:grid;
+      grid-template-columns:max-content minmax(18px, 1fr) max-content;
+      align-items:baseline;
+      gap:8px;
+      min-height:28px;
+      padding:2px 0 1px;
+      font-size:17px;
+      line-height:1.35;
+    }
+    .service-name { font-weight:700; white-space:nowrap; }
+    .leader { align-self:center; min-width:14px; height:1px; transform:translateY(-3px); border-bottom:1px dotted #85735a; }
+    .service-meta { color:#4a4035; font-weight:700; white-space:nowrap; font-size:15px; }
+    .service-meta small { color:var(--muted); font-size:12px; font-weight:400; }
+    .footer { max-width:620px; margin:15px auto 0; padding:11px 0 0; border-top:1px solid var(--rule); text-align:center; color:var(--muted); }
+    .footer strong { display:block; color:var(--ink); font-size:17px; line-height:1.2; }
+    .footer p { margin:3px 0 0; font-size:12px; }
+    .footer-ornament { margin:6px 0 0; color:var(--accent); font-size:17px; letter-spacing:.35em; }
+    html,body { width:100%; height:100%; overflow:hidden; }
+    body { padding:0; }
+    .carousel-viewport { position:fixed; inset:0; z-index:1; overflow:hidden; touch-action:none; }
+    .fixed-frame { position:absolute; z-index:0; top:50%; left:50%; width:min(900px,calc(100vw - 74px)); height:1020px; min-height:0; margin:0; padding:0; overflow:hidden; isolation:isolate; transform:translate(-50%,-50%) scale(var(--fit-scale,1)); transform-origin:center; background-color:var(--paper); background-image:linear-gradient(112deg,#fff9e62e,transparent 35%,#7a603211),radial-gradient(#705a3711 .75px,transparent .75px); background-size:auto,6px 6px; border:1px solid #8d785a; box-shadow:0 12px 45px #2d211632; pointer-events:auto; }
+    .fixed-frame::before,.fixed-frame::after { content:""; position:absolute; z-index:2; inset:15px; pointer-events:none; }
+    .fixed-frame::before { border:3px double #715d43; }
+    .fixed-frame::after { inset:21px; border:1px solid #a18a67; }
+    .fixed-frame .corner { z-index:3; }
+    .fixed-frame .frame-scissors { position:absolute; z-index:1; top:38px; left:22px; width:68px; color:#49392a; opacity:.58; transform:scaleX(-1) rotate(12deg); pointer-events:none; }
+    .fixed-frame .frame-bottle { position:absolute; z-index:1; top:38px; right:22px; width:58px; color:#49392a; opacity:.58; transform:rotate(5deg); pointer-events:none; }
+    .fixed-frame .frame-leaves { position:absolute; z-index:1; bottom:34px; left:16px; width:64px; color:#5c624d; opacity:.46; pointer-events:none; }
+    .fixed-frame .frame-shears { position:absolute; z-index:3; right:18px; bottom:27px; width:64px; color:#49392a; opacity:.65; transform:rotate(-12deg); pointer-events:none; }
+    .fixed-frame svg { display:block; width:100%; height:auto; }
+    .fixed-frame path,.fixed-frame line,.fixed-frame circle,.fixed-frame rect,.fixed-frame ellipse,.fixed-frame polygon { stroke:currentColor; stroke-width:1.45; stroke-linecap:round; stroke-linejoin:round; fill:none; }
+    .carousel-track { position:absolute; z-index:1; inset:0; width:100%; height:100%; transform:translate3d(0,0,0); user-select:none; -webkit-user-select:none; pointer-events:auto; }
+    .carousel-track.is-dragging { cursor:grabbing; }
+    .slide { position:absolute; inset:0; width:100%; height:100%; overflow:hidden; direction:rtl; transition:transform .55s cubic-bezier(.22,.75,.18,1); }
+    .slide:first-child { transform:translate3d(0,0,0); }
+    .slide:nth-child(2) { transform:translate3d(-100%,0,0); }
+    .slide:nth-child(3) { transform:translate3d(-200%,0,0); }
+    .slide .poster { width:100%; min-height:0; height:auto; margin:0; padding:25px clamp(34px,8vw,70px) 24px; transform:none; background:transparent; border-color:transparent; box-shadow:none; }
+    .slide .poster::before,.slide .poster::after,.slide .poster > .corner,.slide .poster > .decoration { display:none; }
+    .catalog-poster { color:var(--ink); }
+    .catalog-poster .brand-logo { width:82px; height:82px; }
+    .catalog-poster .brand-name { margin-top:7px; font-size:31px; }
+    .catalog-poster .ornament { margin:9px auto 5px; }
+    .catalog-poster h1 { font-size:29px; }
+    .catalog-poster .subtitle { margin-bottom:9px; }
+    .catalog-head { display:flex; justify-content:space-between; align-items:end; max-width:760px; margin:0 auto 7px; }
+    .catalog-head h2 { margin:0; font-size:20px; }
+    .catalog-head p { margin:0; color:var(--muted); font-size:12px; }
+    .catalog-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:11px; max-width:760px; margin:0 auto; }
+    .catalog-card { min-width:0; padding:8px; border:1px solid #c2ad89; border-radius:46% 46% 18px 18px / 17% 17% 18px 18px; background:linear-gradient(145deg,#f9f2e4,#e5d6ba); box-shadow:0 7px 13px #45332120,inset 0 1px #fff9e6; text-align:center; }
+    .catalog-card.wide { grid-column:span 2; display:grid; grid-template-columns:1fr 1.25fr; align-items:center; border-radius:30px 48px 28px 48px; text-align:right; }
+    .product-orb { position:relative; height:110px; display:grid; place-items:center; }
+    .catalog-card.wide .product-orb { height:142px; }
+    .product-orb::before { content:""; position:absolute; width:88px; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 28%,#fff8e6,#e2d4b7 58%,#c7b38e); box-shadow:inset 0 0 0 1px #a28b665c,0 8px 14px #392b1d18; }
+    .catalog-card.wide .product-orb::before { width:128px; }
+    .product-bottle { position:relative; width:42px; height:80px; border-radius:8px 8px 10px 10px; background:linear-gradient(90deg,#111,#45413b 35%,#171513 72%,#353027); box-shadow:8px 10px 9px #2c211c40; }
+    .product-bottle::before { content:""; position:absolute; width:22px; height:17px; top:-14px; left:10px; border-radius:4px 4px 0 0; background:linear-gradient(90deg,#171614,#555047,#171614); }
+    .product-bottle::after { content:"شعراوي"; position:absolute; left:4px; right:4px; top:27px; padding:5px 0; border:1px solid #b7a37d; background:#eee4d0; color:#392b20; font:700 9px "Amiri",serif; }
+    .product-bottle.amber { background:linear-gradient(90deg,#542d13,#c07b32 35%,#704016 72%,#3a220e); }
+    .product-bottle.jar { width:64px; height:52px; border-radius:8px 8px 11px 11px; }
+    .product-bottle.jar::before { width:68px; height:10px; top:-9px; left:-2px; }
+    .product-bottle.tube { width:46px; height:82px; clip-path:polygon(15% 0,85% 0,100% 85%,83% 100%,17% 100%,0 85%); }
+    .product-bottle.tube::before { display:none; }
+    .catalog-card h3 { margin:0; font-size:17px; line-height:1.15; }
+    .catalog-card p { margin:2px 0 0; color:#5e5142; font-size:11px; line-height:1.3; }
+    .catalog-card strong { display:block; margin-top:4px; color:#723e2e; font-size:17px; }
+    .catalog-note { max-width:760px; margin:9px auto 0; text-align:center; color:var(--muted); font-size:11px; }
+    .contact-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; max-width:760px; margin:10px auto 0; }
+    .contact-card { padding:15px 18px; border:1px solid #c2ad89; border-radius:24px; background:linear-gradient(145deg,#f9f2e4,#e5d6ba); box-shadow:0 7px 13px #45332120,inset 0 1px #fff9e6; }
+    .contact-card h2 { display:flex; align-items:center; gap:9px; margin:0 0 7px; font-size:19px; }
+    .contact-icon { width:32px; height:32px; display:grid; place-items:center; flex:0 0 auto; border-radius:50%; color:#f8f0e1; background:var(--olive); font:700 16px/1 Arial,sans-serif; }
+    .contact-card p { margin:3px 0; color:#55483a; font-size:14px; }
+    .hours-row { display:flex; justify-content:space-between; gap:10px; padding:4px 0; border-bottom:1px dotted #aa9676; font-size:14px; }
+    .hours-row:last-child { border-bottom:0; }
+    .contact-value { color:#392b20; font-weight:700; }
+    .contact-link { display:inline-flex; align-items:center; gap:6px; margin-top:5px; color:#704532; text-decoration-thickness:1px; text-underline-offset:3px; font-size:14px; font-weight:700; }
+    .social-links { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+    .social-link { padding:5px 12px; border:1px solid #aa9676; border-radius:999px; color:#392b20; background:#f7efdfbd; text-decoration:none; font-size:13px; font-weight:700; }
+    .contact-disclaimer { margin:9px auto 0; color:var(--muted); text-align:center; font-size:11px; }
+    .slide-counter { position:fixed; z-index:24; bottom:10px; left:50%; transform:translateX(-50%); padding:3px 11px; border:1px solid #8d785a99; border-radius:999px; color:var(--muted); background:#eee4d0df; font-size:12px; }
+    html.intro-play .slide-counter { opacity:0; }
+    .decoration { position:absolute; z-index:0; pointer-events:none; color:#49392a; opacity:.68; }
+    .decoration svg { width:100%; height:auto; display:block; overflow:visible; }
+    .decoration path,.decoration line,.decoration circle,.decoration rect,.decoration ellipse,.decoration polygon { stroke:currentColor; stroke-width:1.45; stroke-linecap:round; stroke-linejoin:round; fill:none; }
+    .decoration .shade { fill:#9c8060; stroke:#49392a; stroke-width:.75; }
+    .decoration.shears-top { top:39px; left:17px; width:75px; transform:scaleX(-1) rotate(12deg); }
+.decoration.bottle { top:38px; right:18px; width:63px; transform:rotate(5deg); }
+    .decoration.pole { top:36%; right:11px; width:54px; }
+    .decoration.pole-left { top:36%; left:11px; width:54px; transform:scaleX(-1); }
+    .decoration.leaves { top:218px; right:12px; left:auto; width:86px; color:#5c624d; transform:scaleX(-1) rotate(-7deg) scaleY(-1); }
+    .decoration.leaves-bottom { bottom:43px; left:12px; right:auto; width:86px; color:#5c624d; transform:rotate(-7deg); }
+    .decoration.shears { bottom:38px; right:14px; width:72px; transform:rotate(-12deg); }
+@media (max-width:700px) {
+      .poster { padding:24px 25px; }
+      .poster::before { inset:10px; border-width:2px; }
+      .poster::after { inset:15px; }
+      .brand-logo { width:95px; height:95px; }
+      .brand-name { font-size:31px; }
+      h1 { font-size:28px; }
+      .section-title { font-size:21px; }
+      .nav-pills { margin-bottom:13px; }
+      .slide .poster { width:calc(100vw - 52px); padding:24px 25px; }
+      .fixed-frame { width:calc(100vw - 52px); }
+      .fixed-frame::before { inset:10px; border-width:2px; }
+      .fixed-frame::after { inset:15px; }
+      .fixed-frame .frame-scissors { top:30px; left:10px; width:44px; }
+      .fixed-frame .frame-bottle { top:30px; right:10px; width:38px; }
+      .fixed-frame .frame-leaves { bottom:20px; left:7px; width:36px; }
+      .fixed-frame .frame-shears { right:8px; bottom:17px; width:42px; }
+      .catalog-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
+      .contact-grid { gap:7px; }
+      .contact-card { padding:10px; border-radius:18px; }
+      .contact-card h2 { font-size:17px; }
+      .hours-row,.contact-card p { font-size:12px; }
+      .contact-link { font-size:12px; }
+      .catalog-card { padding:6px; }
+      .catalog-card.wide { grid-column:span 2; }
+      .product-orb { height:86px; }
+      .product-orb::before { width:70px; }
+      .catalog-card.wide .product-orb { height:110px; }
+      .catalog-card.wide .product-orb::before { width:96px; }
+      .product-bottle { transform:scale(.82); }
+      .menu-item { grid-template-columns:minmax(0, max-content) minmax(9px, 1fr) max-content; gap:6px; font-size:15px; }
+      .service-name { white-space:normal; }
+      .service-meta { font-size:13px; }
+      .service-meta small { font-size:11px; }
+      .decoration { opacity:.25; }
+      .decoration.shears-top { top:34px; left:8px; width:48px; }
+      .decoration.bottle,.decoration.pole-left { display:none; }
+      .decoration.leaves { top:210px; right:4px; width:43px; opacity:.2; }
+      .decoration.leaves-bottom { bottom:24px; left:4px; width:43px; opacity:.2; }
+      .decoration.shears { bottom:25px; right:8px; width:46px; opacity:.25; }
+      .decoration.pole { top:35%; right:6px; width:31px; opacity:.22; }
+}
+    @media (max-width:390px) {
+      .poster { padding-right:21px; padding-left:21px; }
+      .topline { font-size:10px; }
+      .topline i { width:17px; }
+      .menu-item { grid-template-columns:minmax(0, max-content) minmax(7px, 1fr) max-content; gap:5px; font-size:14px; }
+      .service-name { white-space:normal; overflow-wrap:anywhere; }
+      .service-meta { font-size:12px; }
+      .catalog-card h3 { font-size:15px; }
+      .catalog-card p { font-size:10px; }
+      .contact-grid { grid-template-columns:1fr; }
+    }
+    @media print {
+      @page { size: A4 portrait; margin: 8mm; }
+      .intro-overlay { display:none!important; }
+      html,body { background:#fff; padding:0; }
+      .poster { width:100%; min-height:0; border:0; box-shadow:none; padding:20px 35px; }
+      .poster::before { inset:5px; }
+      .poster::after { inset:11px; }
+.decoration { opacity:.52; }
+    }
+  </style>
+  <script>
+  (() => {
+    const root = document.documentElement;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let shouldPlay = !reducedMotion && (!location.hash || location.hash === "#menu");
+    try {
+      if (sessionStorage.getItem("sh3rawy-intro-seen")) shouldPlay = false;
+      else if (shouldPlay) sessionStorage.setItem("sh3rawy-intro-seen", "1");
+    } catch (_) { /* Keep the intro available when storage is blocked. */ }
+    if (!shouldPlay) root.classList.add("intro-skip");
+    else root.classList.add("intro-play");
+  })();
+</script>
+
+</head>
+<body>
+  <div class="intro-overlay" aria-hidden="true">
+    <div class="intro-paper intro-paper-top"></div>
+    <div class="intro-paper intro-paper-bottom"></div>
+    <div class="intro-stage">
+      <div class="intro-brand"><span class="intro-mark">شعراوي</span><span class="intro-caption">للحلاقة وتصفيف الشعر</span></div>
+      <div class="intro-tools intro-scissors">
+        <svg class="intro-tool-art lift-up" viewBox="0 0 180 125">
+          <g class="scissor-upper"><circle class="metal" cx="35" cy="27" r="18"/><path class="handle" d="M48 39 76 60 157 17 166 20 161 29 79 66 48 39Z"/><path d="m76 60 84-43" fill="none"/></g>
+          <g class="scissor-lower"><circle class="metal" cx="35" cy="96" r="18"/><path class="handle" d="M48 84 76 63 157 106 166 103 161 94 79 57 48 84Z"/><path d="m76 63 84 43" fill="none"/></g>
+          <circle class="pivot" cx="77" cy="62" r="5"/>
+        </svg>
+      </div>
+      <div class="intro-tools intro-razor">
+        <svg class="intro-tool-art lift-down" viewBox="0 0 180 105">
+          <path class="metal" d="M55 47 150 18q8-2 13 4l5 8q2 6-5 9L58 58l-8-6 5-5Z"/>
+          <path d="m63 48 94-26M62 55l101-22" fill="none"/>
+          <path class="handle" d="m54 48-31 41q-4 6 2 10l8 4q6 2 10-4l26-43Z"/>
+          <path d="m47 61 14 9M40 71l14 9M33 81l13 8" fill="none"/>
+          <circle class="pivot" cx="55" cy="52" r="6"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="carousel-viewport" aria-label="صفحات شعراوي">
+    <div class="fixed-frame" id="fixed-frame">
+      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <div class="frame-scissors"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="m8 8 12 12M8 16 20 4"/></svg></div>
+      <div class="frame-bottle"><svg viewBox="0 0 90 120"><path d="M27 24h37l5 13v61H22V37l5-13Z"/><path d="M34 24V12h23v12M34 12h23M30 41h31M31 47h29M37 5h18v7H37z"/></svg></div>
+      <div class="frame-leaves"><svg viewBox="0 0 130 170"><path d="M14 158Q52 92 105 15M31 126Q20 98 8 94q1 22 23 32Zm15-24Q42 78 47 63q15 17 2 39Zm20-31Q59 48 68 34q12 20 1 37Zm18-27Q82 25 95 14q7 21-8 30Zm-43 64q20-2 31 8-17 11-31-8Zm20-31q20-4 31 5-17 14-31-5Zm20-29q19-6 29 0-15 16-29 0Z"/></svg></div>
+      <div class="carousel-track" id="carousel-track">
+      <section class="slide" aria-label="منيو الحلاقة">
+  <main class="poster" aria-labelledby="menu-title">
+    <span class="corner tl" aria-hidden="true"></span><span class="corner tr" aria-hidden="true"></span>
+    <span class="corner bl" aria-hidden="true"></span><span class="corner br" aria-hidden="true"></span>
+
+    <div class="decoration shears-top" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="m8.12 8.12 12 12M8.12 15.88 20 4M12 12l-1 1"/></svg></div>
+    <div class="decoration bottle" aria-hidden="true"><svg viewBox="0 0 90 120"><path d="M27 24h37l5 13v61H22V37l5-13Z"/><path d="M34 24V12h23v12M34 12h23M30 41h31M31 47h29"/><path d="M37 5h18v7H37z"/><path d="M27 87h37"/></svg></div>
+    <div class="decoration pole-left" aria-hidden="true"><svg viewBox="0 0 70 230"><defs><clipPath id="pole-body-left"><path d="M17 39q0-10 10-10h16q10 0 10 10v147q0 10-10 10H27q-10 0-10-10V39Z"/></clipPath></defs><path d="M23 29V15q0-8 8-8h8q8 0 8 8v14M18 39q0-10 9-10h16q10 0 10 10v147q0 10-10 10H27q-10 0-10-10V39Z"/><g clip-path="url(#pole-body-left)"><path class="shade" d="m12 63 52-34v23L12 87Zm0 53 52-34v23l-52 35Zm0 53 52-34v23l-52 35Z"/></g><path d="M13 40h42M13 185h42M21 199v12h28v-12M18 216h34"/></svg></div>
+    <div class="decoration pole" aria-hidden="true"><svg viewBox="0 0 70 230"><defs><clipPath id="pole-body"><path d="M17 39q0-10 10-10h16q10 0 10 10v147q0 10-10 10H27q-10 0-10-10V39Z"/></clipPath></defs><path d="M23 29V15q0-8 8-8h8q8 0 8 8v14M18 39q0-10 9-10h16q10 0 10 10v147q0 10-10 10H27q-10 0-10-10V39Z"/><g clip-path="url(#pole-body)"><path class="shade" d="m12 63 52-34v23L12 87Zm0 53 52-34v23l-52 35Zm0 53 52-34v23l-52 35Z"/></g><path d="M13 40h42M13 185h42M21 199v12h28v-12M18 216h34"/></svg></div>
+    <div class="decoration leaves" aria-hidden="true"><svg viewBox="0 0 130 170"><path d="M14 158Q52 92 105 15M31 126Q20 98 8 94q1 22 23 32Zm15-24Q42 78 47 63q15 17 2 39Zm20-31Q59 48 68 34q12 20 1 37Zm18-27Q82 25 95 14q7 21-8 30Zm-43 64q20-2 31 8-17 11-31-8Zm20-31q20-4 31 5-17 14-31-5Zm20-29q19-6 29 0-15 16-29 0Z"/><path d="M28 150Q58 120 88 115M55 106Q79 81 105 75"/></svg></div>
+    <div class="decoration leaves-bottom" aria-hidden="true"><svg viewBox="0 0 130 170"><path d="M14 158Q52 92 105 15M31 126Q20 98 8 94q1 22 23 32Zm15-24Q42 78 47 63q15 17 2 39Zm20-31Q59 48 68 34q12 20 1 37Zm18-27Q82 25 95 14q7 21-8 30Zm-43 64q20-2 31 8-17 11-31-8Zm20-31q20-4 31 5-17 14-31-5Zm20-29q19-6 29 0-15 16-29 0Z"/><path d="M28 150Q58 120 88 115M55 106Q79 81 105 75"/></svg></div>
+    <div class="decoration shears" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="m8.12 8.12 12 12M8.12 15.88 20 4M12 12l-1 1"/></svg></div>
+
+    <div class="topline"><span><i></i> حلاقة وتصفيف على أصولها</span><span>منيو شعراوي<i></i></span></div>
+    <header class="brand">
+      <img class="brand-logo" src="./assets/sh3rawy-logo.jpg" alt="شعار شعراوي للحلاقة وتصفيف الشعر">
+      <h2 class="brand-name">شعراوي</h2>
+      <p class="brand-tag">للحلاقة وتصفيف الشعر</p>
+    </header>
+    <div class="ornament" aria-hidden="true"><span>✦ ◆ ✦</span></div>
+    <h1 id="menu-title">قائمة الخدمات والأسعار</h1>
+    <p class="subtitle">حلاقة رجالي · عناية · تفاصيل تليق بيك</p>
+    <nav class="nav-pills" aria-label="التنقل بين صفحات شعراوي">
+      <button type="button" data-go-slide="0" aria-current="page">منيو الحلاقة</button>
+      <button type="button" data-go-slide="1">منتجات العناية</button>
+      <button type="button" data-go-slide="2">المواعيد والتواصل</button>
+    </nav>
+    <p class="intro">اختار خدمتك المفضلة واستمتع بحلاقة متقنة واهتمام بكل تفصيلة.</p>
+
+    <section class="menu-section" aria-labelledby="hair-title">
+      <h2 class="section-title" id="hair-title"><span class="flourish" aria-hidden="true">✂</span> قص الشعر والتصفيف <span class="flourish" aria-hidden="true">✂</span></h2>
+      <ul class="menu-list" data-menu="hair"></ul>
+    </section>
+    <section class="menu-section" aria-labelledby="beard-title">
+      <h2 class="section-title" id="beard-title"><span class="flourish" aria-hidden="true">✦</span> اللحية والحلاقة <span class="flourish" aria-hidden="true">✦</span></h2>
+      <ul class="menu-list" data-menu="beard"></ul>
+    </section>
+    <section class="menu-section" aria-labelledby="extras-title">
+      <h2 class="section-title" id="extras-title"><span class="flourish" aria-hidden="true">✦</span> الباقات والإضافات <span class="flourish" aria-hidden="true">✦</span></h2>
+      <ul class="menu-list" data-menu="extras"></ul>
+    </section>
+    <footer class="footer">
+      <strong>أهلاً بيك في شعراوي</strong>
+      <p>كل الأسعار بالجنيه المصري · اسألنا عن تفاصيل الخدمات والباقات</p>
+      <div class="footer-ornament" aria-hidden="true">❧ ✂ ❧</div>
+    </footer>
+  </main>
+      </section>
+      <section class="slide" aria-label="منتجات العناية للشعر واللحية">
+        <section class="poster catalog-poster" aria-labelledby="care-title">
+          <span class="corner tl" aria-hidden="true"></span><span class="corner tr" aria-hidden="true"></span>
+          <span class="corner bl" aria-hidden="true"></span><span class="corner br" aria-hidden="true"></span>
+          <div class="topline"><span><i></i> عناية على أصولها</span><span>من رفّ شعراوي<i></i></span></div>
+          <header class="brand"><img class="brand-logo" src="./assets/sh3rawy-logo.jpg" alt="شعار شعراوي"><div class="brand-name">شعراوي</div><p class="brand-tag">للحلاقة وتصفيف الشعر</p></header>
+          <div class="ornament" aria-hidden="true"><span>✦ ◆ ✦</span></div>
+          <h1 id="care-title">منتجات العناية</h1>
+          <p class="subtitle">اختيارات مقترحة للشعر واللحية تكمل عنايتك اليومية</p>
+          <nav class="nav-pills" aria-label="التنقل بين الصفحات">
+            <button type="button" data-go-slide="0">منيو الحلاقة</button><button type="button" data-go-slide="1" aria-current="page">منتجات العناية</button><button type="button" data-go-slide="2">المواعيد والتواصل</button>
+          </nav>
+          <div class="catalog-head"><h2>من رفّ الحلاق</h2><p>للشعر واللحية والأدوات</p></div>
+          <div class="catalog-grid">
+            <article class="catalog-card wide"><div class="product-orb"><span class="product-bottle"></span></div><div><h3>شامبو تنظيف يومي</h3><p>تنظيف منعش للشعر وفروة الرأس، مناسب للاستخدام اليومي.</p><strong>٢٩٠ ج.م</strong></div></article>
+            <article class="catalog-card"><div class="product-orb"><span class="product-bottle amber"></span></div><h3>زيت اللحية</h3><p>ترطيب ولمعان خفيف · ٣٠ مل</p><strong>٢٢٠ ج.م</strong></article>
+            <article class="catalog-card"><div class="product-orb"><span class="product-bottle jar"></span></div><h3>واكس تثبيت مطفي</h3><p>تصفيف مرن وثبات طبيعي</p><strong>٢٤٠ ج.م</strong></article>
+            <article class="catalog-card"><div class="product-orb"><span class="product-bottle amber"></span></div><h3>بلسم اللحية</h3><p>تنعيم وترتيب طول اليوم</p><strong>٢٦٠ ج.م</strong></article>
+            <article class="catalog-card"><div class="product-orb"><span class="product-bottle tube"></span></div><h3>مشط وفرشاة</h3><p>أدوات يومية للعناية</p><strong>١٨٠ ج.م</strong></article>
+          </div>
+          <p class="catalog-note">المنتجات والأسعار أمثلة قابلة للتعديل · اسأل الحلاق عن الأنسب ليك.</p>
+        </section>
+      </section>
+      <section class="slide" aria-label="مواعيد وموقع وطرق التواصل">
+        <section class="poster catalog-poster" aria-labelledby="contact-title">
+          <span class="corner tl" aria-hidden="true"></span><span class="corner tr" aria-hidden="true"></span>
+          <span class="corner bl" aria-hidden="true"></span><span class="corner br" aria-hidden="true"></span>
+          <div class="topline"><span><i></i> دايمًا قريبين منك</span><span>زورنا أو كلمنا<i></i></span></div>
+          <header class="brand"><img class="brand-logo" src="./assets/sh3rawy-logo.jpg" alt="شعار شعراوي"><div class="brand-name">شعراوي</div><p class="brand-tag">للحلاقة وتصفيف الشعر</p></header>
+          <div class="ornament" aria-hidden="true"><span>✦ ◆ ✦</span></div>
+          <h1 id="contact-title">مواعيدنا ومكاننا</h1>
+          <p class="subtitle">يسعدنا زيارتك أو تواصلك معانا</p>
+          <nav class="nav-pills" aria-label="التنقل بين الصفحات">
+            <button type="button" data-go-slide="0">منيو الحلاقة</button><button type="button" data-go-slide="1">منتجات العناية</button><button type="button" data-go-slide="2" aria-current="page">المواعيد والتواصل</button>
+          </nav>
+          <div class="contact-grid">
+            <section class="contact-card">
+              <h2><span class="contact-icon" aria-hidden="true">◷</span> مواعيد العمل</h2>
+              <div class="hours-row"><span>السبت – الخميس</span><span class="contact-value">١٠ ص – ١١ م</span></div>
+              <div class="hours-row"><span>الجمعة</span><span class="contact-value">٢ م – ١١ م</span></div>
+              <p>آخر موعد للحجز قبل الإغلاق بنصف ساعة.</p>
+            </section>
+            <section class="contact-card">
+              <h2><span class="contact-icon" aria-hidden="true">⌖</span> عنوان المحل</h2>
+              <p class="contact-value">٢٣ شارع التحرير، الدقي، الجيزة</p>
+              <p>قريب من ميدان الدقي · العنوان للتجربة</p>
+              <a class="contact-link" href="https://maps.google.com/?q=23+Tahrir+Street+Dokki+Giza" target="_blank" rel="noopener noreferrer">افتح الموقع على الخريطة ↗</a>
+            </section>
+            <section class="contact-card">
+              <h2><span class="contact-icon" aria-hidden="true">☎</span> كلمنا</h2>
+              <p>للحجز والاستفسار:</p>
+              <p><a class="contact-link" href="tel:+201000000000">0100 000 0000</a></p>
+              <p><a class="contact-link" href="tel:+20212345678">02 1234 5678</a></p>
+            </section>
+            <section class="contact-card">
+              <h2><span class="contact-icon" aria-hidden="true">@</span> تابعنا</h2>
+              <p>تابع الجديد والعروض على صفحاتنا:</p>
+              <div class="social-links">
+                <a class="social-link" href="https://facebook.com/sh3rawy.barber" target="_blank" rel="noopener noreferrer">f Facebook</a>
+                <a class="social-link" href="https://instagram.com/sh3rawy.barber" target="_blank" rel="noopener noreferrer">◎ Instagram</a>
+              </div>
+            </section>
+          </div>
+          <p class="contact-disclaimer">بيانات العنوان والأرقام وروابط التواصل ومواعيد العمل تجريبية وقابلة للتعديل.</p>
+        </section>
+      </section>
+      </div>
+      <div class="frame-shears"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="m8.12 8.12 12 12M8.12 15.88 20 4M12 12l-1 1"/></svg></div>
+    </div>
+  </div>
+  <div class="slide-counter" id="slide-counter" aria-live="polite">١ / ٣</div>
+  <script>
+    const menu = {
+      hair: [
+        ["قصة كلاسيك", "١٨٠", "٤٥ دقيقة"],
+        ["فيد / تدريج", "٢٢٠", "٦٠ دقيقة"],
+        ["قصة بالمقص (شعر طويل)", "٢٤٠", "٦٠ دقيقة"],
+        ["قصة ماكينة (درجة واحدة)", "١٤٠", "٢٠ دقيقة"],
+        ["قصة أطفال (حتى ١٢ سنة)", "١٥٠", "٣٠ دقيقة"],
+        ["تحديد جوانب ورقبة", "٩٠", "١٥ دقيقة"]
+      ],
+      beard: [
+        ["حلاقة بفوطة ساخنة", "١٦٠", "٥٠ دقيقة"],
+        ["تهذيب وتحديد اللحية", "١٢٠", "٣٠ دقيقة"],
+        ["تحديد اللحية بالموس", "١٤٠", "٤٠ دقيقة"],
+        ["تحديد الشنب والسكسوكة", "٧٥", "١٥ دقيقة"]
+      ],
+      extras: [
+        ["لوك كامل (شعر + لحية + غسيل)", "٣٦٠", "٩٠ دقيقة"],
+        ["حلاقة رأس + تهذيب لحية", "٢٨٠", "٧٥ دقيقة"],
+        ["غسيل شعر وتدليك فروة الرأس", "١٣٠", "٣٠ دقيقة"],
+        ["إزالة شعر الأنف والأذن", "٨٠", "١٥ دقيقة"],
+        ["عناية بالبشرة للرجال", "٢٠٠", "٣٠ دقيقة"]
+      ]
+    };
+    const root = document.documentElement;
+    const introMark = document.querySelector(".intro-mark");
+    const menuBrand = document.querySelector(".brand-name");
+    if (root.classList.contains("intro-play") && introMark && menuBrand) {
+      const startWordMotion = () => {
+        if (!root.classList.contains("intro-play")) return;
+        const start = introMark.getBoundingClientRect();
+        const target = menuBrand.getBoundingClientRect();
+        const dx = target.left + target.width / 2 - (start.left + start.width / 2);
+        const dy = target.top + target.height / 2 - (start.top + start.height / 2);
+        const scale = Math.min(target.width / start.width, target.height / start.height);
+        const moveDelay = Math.max(0, 3300 - performance.now());
+        introMark.animate(
+          [
+            {transform:"translate(0px, 0px) scale(1)"},
+            {transform:`translate(${dx}px, ${dy}px) scale(${scale})`}
+          ],
+          {duration:650, delay:moveDelay, easing:"cubic-bezier(.2,.8,.2,1)", fill:"forwards"}
+        );
+        const revealDelay = moveDelay + 650;
+        window.setTimeout(() => {
+          root.classList.remove("intro-play");
+          root.classList.add("intro-skip");
+        }, revealDelay);
+      };
+      if (document.fonts?.ready) document.fonts.ready.then(() => requestAnimationFrame(startWordMotion));
+      else requestAnimationFrame(startWordMotion);
+    }
+    document.querySelectorAll("[data-menu]").forEach((list) => {
+      const entries = menu[list.dataset.menu] ?? [];
+      entries.forEach(([name, price, duration]) => {
+        const item = document.createElement("li");
+        item.className = "menu-item";
+        const service = document.createElement("span");
+        service.className = "service-name";
+        service.textContent = name;
+        const leader = document.createElement("span");
+        leader.className = "leader";
+        leader.setAttribute("aria-hidden", "true");
+        const meta = document.createElement("span");
+        meta.className = "service-meta";
+        meta.innerHTML = `${price} <small>ج.م · ${duration}</small>`;
+        item.append(service, leader, meta);
+        list.append(item);
+      });
+    });
+  </script>
+  <script>
+    (() => {
+      const track = document.getElementById("carousel-track");
+      const frame = document.getElementById("fixed-frame");
+      const slides = [...document.querySelectorAll(".slide")];
+      const counter = document.getElementById("slide-counter");
+      const digits = ["١", "٢", "٣"];
+      let current = 0;
+      let pointerStart = null;
+      let fitScale = 1;
+
+      function fitSlides() {
+        const availableWidth = Math.max(180, window.innerWidth - 86);
+        const availableHeight = Math.max(240, window.innerHeight - 28);
+        const panels = slides.map((slide) => slide.querySelector(".poster"));
+        panels.forEach((panel) => { panel.style.height = "auto"; });
+        const commonWidth = Math.max(...panels.map((panel) => panel.offsetWidth));
+        const commonHeight = Math.max(...panels.map((panel) => panel.offsetHeight));
+        const scale = Math.min(1, availableWidth / commonWidth, availableHeight / commonHeight);
+        fitScale = scale;
+        frame.style.width = `${commonWidth}px`;
+        frame.style.height = `${commonHeight}px`;
+        frame.style.setProperty("--fit-scale", String(scale));
+        panels.forEach((panel) => {
+          panel.style.height = `${commonHeight}px`;
+          panel.style.setProperty("--fit-scale", String(scale));
+        });
+      }
+
+      function setSlide(index, animate = true) {
+        current = Math.max(0, Math.min(slides.length - 1, index));
+        track.classList.toggle("is-dragging", !animate);
+        track.style.transform = "translate3d(0,0,0)";
+        const route = ["#menu", "#care", "#contact"][current];
+        if (window.location.hash !== route) {
+          try { history.replaceState(null, "", route); } catch (_) { /* Local file URLs may block history updates. */ }
+        }
+        slides.forEach((slide, position) => {
+          const active = position === current;
+          slide.style.transform = `translate3d(${(current - position) * 100}%,0,0)`;
+          slide.setAttribute("aria-hidden", String(!active));
+          slide.inert = !active;
+        });
+        document.querySelectorAll("[data-go-slide]").forEach((button) => {
+          if (Number(button.dataset.goSlide) === current) button.setAttribute("aria-current", "page");
+          else button.removeAttribute("aria-current");
+        });
+        counter.textContent = `${digits[current]} / ${digits[slides.length - 1]}`;
+      }
+
+      document.querySelectorAll("[data-go-slide]").forEach((button) => {
+        button.addEventListener("click", () => setSlide(Number(button.dataset.goSlide)));
+      });
+      track.addEventListener("pointerdown", (event) => {
+        if (event.button !== 0 || event.target.closest("button, a")) return;
+        pointerStart = {id:event.pointerId, x:event.clientX, y:event.clientY};
+        track.setPointerCapture(event.pointerId);
+      });
+      track.addEventListener("pointermove", (event) => {
+        if (!pointerStart || pointerStart.id !== event.pointerId) return;
+        const dx = event.clientX - pointerStart.x;
+        track.classList.add("is-dragging");
+        track.style.transform = `translate3d(${dx / fitScale}px,0,0)`;
+      });
+      function finishDrag(event) {
+        if (!pointerStart || pointerStart.id !== event.pointerId) return;
+        const dx = event.clientX - pointerStart.x;
+        pointerStart = null;
+        if (Math.abs(dx) > Math.max(48, window.innerWidth * .12)) setSlide(current + (dx > 0 ? 1 : -1));
+        else setSlide(current);
+      }
+      track.addEventListener("pointerup", finishDrag);
+      track.addEventListener("pointercancel", finishDrag);
+      window.addEventListener("keydown", (event) => {
+        if (event.altKey || event.ctrlKey || event.metaKey) return;
+        if (event.key === "ArrowRight") setSlide(current + 1);
+        if (event.key === "ArrowLeft") setSlide(current - 1);
+      });
+      window.addEventListener("resize", fitSlides);
+      const routeIndex = {"#menu":0, "#care":1, "#contact":2};
+      setSlide(routeIndex[window.location.hash] ?? 0);
+      fitSlides();
+      if (document.fonts?.ready) document.fonts.ready.then(fitSlides);
+      window.addEventListener("load", fitSlides, {once:true});
+      window.addEventListener("hashchange", () => setSlide(routeIndex[window.location.hash] ?? 0));
+    })();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
