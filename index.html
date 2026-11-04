@@ -561,15 +561,15 @@
         const dx = target.left + target.width / 2 - (start.left + start.width / 2);
         const dy = target.top + target.height / 2 - (start.top + start.height / 2);
         const scale = Math.min(target.width / start.width, target.height / start.height);
-        const moveDelay = Math.max(0, 3300 - performance.now());
+        const moveDelay = Math.max(0, 2350 - performance.now());
         introMark.animate(
           [
             {transform:"translate(0px, 0px) scale(1)"},
             {transform:`translate(${dx}px, ${dy}px) scale(${scale})`}
           ],
-          {duration:650, delay:moveDelay, easing:"cubic-bezier(.2,.8,.2,1)", fill:"forwards"}
+          {duration:950, delay:moveDelay, easing:"cubic-bezier(.2,.8,.2,1)", fill:"forwards"}
         );
-        const revealDelay = moveDelay + 650;
+        const revealDelay = moveDelay + 950;
         window.setTimeout(() => {
           root.classList.remove("intro-play");
           root.classList.add("intro-skip");
