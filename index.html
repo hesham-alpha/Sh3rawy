@@ -61,8 +61,8 @@
     .intro-tool-art { display:block; width:100%; height:auto; overflow:visible; filter:drop-shadow(0 3px 2px #39291d2b); }
     .lift-up { animation:tool-lift-up .65s cubic-bezier(.3,.05,.2,1) 2.35s forwards; }
     .lift-down { animation:tool-lift-down .65s cubic-bezier(.3,.05,.2,1) 2.35s forwards; }
-    .intro-scissors { left:calc(50% - 190px); transform:translate(-110vw, -50%) rotate(-18deg); animation:scissors-cut 2.35s cubic-bezier(.4,0,.2,1) forwards; }
-    .intro-razor { right:calc(50% - 190px); transform:translate(110vw, -50%) rotate(18deg); animation:razor-sweep 2.35s cubic-bezier(.4,0,.2,1) forwards; }
+    .intro-scissors { left:calc(50% - 190px); transform:translate(-110vw, -50%) rotate(-18deg); animation:scissors-cut 1.7s cubic-bezier(.2,.8,.2,1) forwards; }
+    .intro-razor { right:calc(50% - 190px); transform:translate(110vw, -50%) rotate(18deg); animation:razor-sweep 1.7s cubic-bezier(.2,.8,.2,1) forwards; }
     .intro-tools path,.intro-tools circle,.intro-tools line { stroke:#34271d; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
     .intro-tools .metal { fill:#f4ead6; }
     .intro-tools .handle { fill:#78583c; }
@@ -74,16 +74,16 @@
     html.intro-play .slide:first-child .brand-name { visibility:hidden; }
     @keyframes scissors-cut {
       0% { transform:translate(-110vw, -50%) rotate(-18deg); }
-      34% { transform:translate(-68vw, -50%) rotate(4deg); }
-      58% { transform:translate(-30vw, -50%) rotate(-4deg); }
-      82% { transform:translate(-7vw, -50%) rotate(3deg); }
+      22% { transform:translate(-68vw, -50%) rotate(4deg); }
+      48% { transform:translate(-30vw, -50%) rotate(-4deg); }
+      76% { transform:translate(-7vw, -50%) rotate(3deg); }
       100% { transform:translate(0, -50%) rotate(-2deg); }
     }
     @keyframes razor-sweep {
       0% { transform:translate(110vw, -50%) rotate(18deg); }
-      34% { transform:translate(68vw, -50%) rotate(-4deg); }
-      58% { transform:translate(30vw, -50%) rotate(4deg); }
-      82% { transform:translate(7vw, -50%) rotate(-3deg); }
+      22% { transform:translate(68vw, -50%) rotate(-4deg); }
+      48% { transform:translate(30vw, -50%) rotate(4deg); }
+      76% { transform:translate(7vw, -50%) rotate(-3deg); }
       100% { transform:translate(0, -50%) rotate(2deg); }
     }
     @keyframes snip-upper { from { transform:rotate(-9deg); } to { transform:rotate(9deg); } }
