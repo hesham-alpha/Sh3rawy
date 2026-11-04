@@ -291,38 +291,42 @@
     .decoration.leaves-bottom { bottom:43px; left:12px; right:auto; width:86px; color:#5c624d; transform:rotate(-7deg); }
     .decoration.shears { bottom:38px; right:14px; width:72px; transform:rotate(-12deg); }
 @media (max-width:700px) {
-      .poster { padding:20px 22px; }
+      .poster { padding:16px 18px; }
       .poster::before { inset:10px; border-width:2px; }
       .poster::after { inset:15px; }
-      .brand-logo { width:88px; height:88px; }
-      .brand-name { font-size:29px; }
-      h1 { font-size:26px; }
-      .section-title { font-size:20px; }
-      .ornament { margin:10px auto 6px; }
-      .subtitle { margin-bottom:8px; }
-      .intro { margin-bottom:10px; }
-      .nav-pills { margin-bottom:10px; }
-      .menu-section { margin-top:11px; }
-      .menu-item { min-height:26px; padding:1px 0; }
-      .slide .poster { width:calc(100vw - 28px); padding:18px 20px; }
-      .fixed-frame { width:calc(100vw - 28px); }
+      .brand-logo { width:76px; height:76px; }
+      .brand-name { margin-top:5px; font-size:27px; }
+      .brand-tag { margin-top:0; font-size:13px; }
+      h1 { font-size:25px; }
+      .section-title { margin-bottom:3px; padding-bottom:3px; font-size:18px; }
+      .ornament { margin:6px auto 4px; }
+      .topline { margin-bottom:5px; }
+      .subtitle { margin:2px 0 6px; }
+      .intro { margin-bottom:6px; }
+      .nav-pills { margin-bottom:6px; }
+      .menu-section { margin-top:7px; }
+      .menu-item { min-height:22px; padding:0; line-height:1.2; }
+      .footer { margin-top:8px; padding-top:6px; }
+      .slide .poster { width:calc(100vw - 12px); padding:48px 18px 50px; }
+      .fixed-frame { width:calc(100vw - 12px); }
       .fixed-frame::before { inset:10px; border-width:2px; }
       .fixed-frame::after { inset:15px; }
-      .fixed-frame .frame-scissors { top:30px; left:10px; width:44px; }
-      .fixed-frame .frame-bottle { top:30px; right:10px; width:38px; }
-      .fixed-frame .frame-leaves { bottom:20px; left:7px; width:36px; }
-      .fixed-frame .frame-shears { right:8px; bottom:17px; width:42px; }
+      .fixed-frame .frame-scissors { top:7px; left:12px; width:32px; }
+      .fixed-frame .frame-bottle { top:6px; right:12px; width:27px; }
+      .fixed-frame .frame-leaves { bottom:6px; left:10px; width:24px; }
+      .fixed-frame .frame-shears { right:10px; bottom:6px; width:30px; }
       .catalog-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
-      .contact-grid { gap:7px; }
-      .contact-card { padding:10px; border-radius:18px; }
-      .contact-card h2 { font-size:17px; }
-      .hours-row,.contact-card p { font-size:12px; }
-      .contact-link { font-size:12px; }
+      .contact-grid { gap:6px; }
+      .contact-card { padding:8px; border-radius:16px; }
+      .contact-card h2 { gap:6px; margin-bottom:4px; font-size:16px; }
+      .contact-card p { margin:2px 0; }
+      .hours-row,.contact-card p { font-size:11px; }
+      .contact-link { margin-top:3px; font-size:11px; }
       .catalog-card { padding:6px; }
       .catalog-card.wide { grid-column:span 2; }
-      .product-orb { height:82px; }
+      .product-orb { height:72px; }
       .product-orb::before { width:70px; }
-      .catalog-card.wide .product-orb { height:100px; }
+      .catalog-card.wide .product-orb { height:84px; }
       .catalog-card.wide .product-orb::before { width:96px; }
       .product-bottle { transform:scale(.82); }
       .menu-item { grid-template-columns:minmax(0, max-content) minmax(9px, 1fr) max-content; gap:6px; font-size:15px; }
@@ -339,15 +343,14 @@
 }
     @media (max-width:390px) {
       .poster { padding-right:21px; padding-left:21px; }
-      .slide .poster { padding:16px; }
+      .slide .poster { padding:46px 14px 46px; }
       .topline { font-size:10px; }
       .topline i { width:17px; }
-      .menu-item { grid-template-columns:minmax(0, max-content) minmax(7px, 1fr) max-content; gap:5px; min-height:25px; font-size:14px; }
+      .menu-item { grid-template-columns:minmax(0, max-content) minmax(7px, 1fr) max-content; gap:5px; min-height:21px; font-size:14px; }
       .service-name { white-space:normal; overflow-wrap:anywhere; }
       .service-meta { font-size:12px; }
       .catalog-card h3 { font-size:15px; }
       .catalog-card p { font-size:10px; }
-      .contact-grid { grid-template-columns:1fr; }
     }
     @media print {
       @page { size: A4 portrait; margin: 8mm; }
@@ -607,7 +610,7 @@
       let fitScale = 1;
 
       function fitSlides() {
-        const availableWidth = Math.max(180, window.innerWidth - 28);
+        const availableWidth = Math.max(180, window.innerWidth - 12);
         const availableHeight = Math.max(240, window.innerHeight - 28);
         const panels = slides.map((slide) => slide.querySelector(".poster"));
         panels.forEach((panel) => { panel.style.height = "auto"; });
