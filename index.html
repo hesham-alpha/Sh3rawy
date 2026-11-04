@@ -70,7 +70,7 @@
     .scissor-upper { transform-box:view-box; transform-origin:78px 61px; animation:snip-upper .48s ease-in-out .28s 4 alternate; }
     .scissor-lower { transform-box:view-box; transform-origin:78px 61px; animation:snip-lower .48s ease-in-out .28s 4 alternate; }
     html.intro-skip .intro-overlay { display:none; }
-    html:not(.intro-skip) .slide:first-child .poster { clip-path:inset(50% 0 50% 0); animation:menu-from-center .95s cubic-bezier(.3,.05,.2,1) 2.35s forwards; }
+    html:not(.intro-skip) .slide:first-child .poster { clip-path:inset(50% 0 50% 0); animation:menu-from-center .65s cubic-bezier(.3,.05,.2,1) 2.35s forwards; }
     html.intro-play .slide:first-child .brand-name { visibility:hidden; }
     @keyframes scissors-cut {
       0% { transform:translate(-110vw, -50%) rotate(-18deg); }
@@ -567,9 +567,9 @@
             {transform:"translate(0px, 0px) scale(1)"},
             {transform:`translate(${dx}px, ${dy}px) scale(${scale})`}
           ],
-          {duration:950, delay:moveDelay, easing:"cubic-bezier(.2,.8,.2,1)", fill:"forwards"}
+          {duration:650, delay:moveDelay, easing:"cubic-bezier(.2,.8,.2,1)", fill:"forwards"}
         );
-        const revealDelay = moveDelay + 950;
+        const revealDelay = moveDelay + 650;
         window.setTimeout(() => {
           root.classList.remove("intro-play");
           root.classList.add("intro-skip");
